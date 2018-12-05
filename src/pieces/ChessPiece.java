@@ -55,11 +55,11 @@ public abstract class ChessPiece {
 		this.name = aname;
 	}
 
-	/**
-	 * 针对棋子本身判断此步是否合法
-	 * 
-	 * @param toRow
-	 * @param toCol
-	 */
+/**
+ * 针对棋子本身判断此步是否合法
+ * @param toRow
+ * @param toCol
+ * @return
+ */
 	abstract public boolean isLegalMove(int toRow, int toCol);
 }
