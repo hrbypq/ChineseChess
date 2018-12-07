@@ -59,16 +59,19 @@ public class Board {
 	 * @return
 	 */
 	public boolean isLegalMove(ChessPiece piece,int toRow,int toCol) {
+		//检测重复落点
 		if(toRow==piece.getRow()&&toCol==piece.getCol())     
 			return false;
+		//不能超出棋盘
 		if(toRow<0||toCol<0||toRow>MAX_ROW||toCol>MAX_COL)
 			return false;
+		//针对棋子本身判断此步是否合法
 		if(!piece.isLegalMove(toRow, toCol))
 			return false;
 		//不能吃自己的子
 		if(pieces[toRow][toCol]!=null&&pieces[toRow][toCol].getColor()==piece.getColor())
 			return false;
-		
+		//根据棋局判断此步是否合法
 		switch(piece.getName()) {
 		
 		//兵
@@ -112,10 +115,116 @@ public class Board {
 		
 		//马
 		case "Knight":{
-			
+			//不能蹩马腿
+			if(toCol==piece.getCol()-2) {
+				if(pieces[piece.getRow()][piece.getCol()-1]!=null) 
+					return false;
+			}
+			if(toCol==piece.getCol()+2) {
+				if(pieces[piece.getRow()][piece.getCol()+1]!=null) 
+					return false;
+			}
+			if(toRow==piece.getRow()-2) {
+				if(pieces[piece.getRow()-1][piece.getCol()]!=null) 
+					return false;
+			}
+			if(toRow==piece.getRow()+2) {
+				if(pieces[piece.getRow()+1][piece.getCol()]!=null) 
+					return false;
+			}
+		}
+		
+		//炮
+		case "Cannon":{
+			//只有吃子时能越过棋子
+			//横向移动情形
+			if(toRow==piece.getRow()) {
+				if(toCol>piece.getCol()) {
+					for(int i=piece.getCol();i<toCol;i++) {
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+							return false;
+					}
+				}
+				if(toCol<piece.getCol()) {
+					for(int i=toCol;i<piece.getCol();i++) {
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+							return false;
+					}
+				}
+			}
+			//纵向移动情形
+			if(toCol==piece.getCol()) {
+				if(toRow>piece.getRow()) {
+					for(int i=piece.getRow();i<toRow;i++) {
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+							return false;
+					}
+				}
+				if(toRow<piece.getRow()) {
+					for(int i=toRow;i<piece.getRow();i++) {
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+							return false;
+					}
+				}
+			}
+		}
+		
+		//象
+		case "Bishop":{
+			//象眼位不能有棋子
+			if(toRow==piece.getRow()-2&&toCol==piece.getCol()-2) {
+				if(pieces[toRow+1][toCol+1]!=null)
+					return false;
+			}
+			if(toRow==piece.getRow()-2&&toCol==piece.getCol()+2) {
+				if(pieces[toRow+1][toCol-1]!=null)
+					return false;
+			}
+			if(toRow==piece.getRow()+2&&toCol==piece.getCol()-2) {
+				if(pieces[toRow-1][toCol+1]!=null)
+					return false;
+			}
+			if(toRow==piece.getRow()+2&&toCol==piece.getCol()+2) {
+				if(pieces[toRow-1][toCol-1]!=null)
+					return false;
+			}
+		}
+		
+		//仕
+		case "Advisor":{
+			break;
+		}
+		
+		//将
+		case "King":{
+			break;
 		}
 		
 		}    //switch end
 		return true;
 	}
+	
+	
+	/**
+	 * 生成步并更新棋盘
+	 * @param toRow
+	 * @param toCol
+	 */
+	public void generateMove(int toRow,int toCol) {
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
