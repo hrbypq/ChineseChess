@@ -2,7 +2,7 @@ package board;
 
 import pieces.*;
 
-public class Board {
+public class Board implements Cloneable{
 	/**
 	 * 构造方法 初始化棋盘
 	 */
@@ -13,6 +13,8 @@ public class Board {
 	public static final int MAX_ROW = 10;
 	// 最大列数
 	public static final int MAX_COL = 9;
+	//棋局状态  若为false则棋局结束
+	private boolean state=true;
 	// 存储棋子
 	private ChessPiece[][] pieces;
 
@@ -205,13 +207,61 @@ public class Board {
 	}
 	
 	
+/**
+ * 生成步并更新棋盘
+ * @param Row
+ * @param Col
+ * @param toRow
+ * @param toCol
+ * @return 是否移动成功
+ */
+	public boolean generateMove(int Row,int Col,int toRow,int toCol) {
+		if(toRow>MAX_ROW||toRow<0||toCol>MAX_COL||toCol<0)   //检查位置是否非法
+			return false;
+		ChessPiece prev=pieces[Row][Col];    //将要移动的棋子
+		if(prev==null)
+			return false;
+		if(!prev.isLegalMove(toRow, toCol))
+			return false;
+		if(!this.isLegalMove(prev, toRow, toCol))
+			return false;
+		//移动棋子
+		if(pieces[toRow][toCol]==null) {
+			prev.setRow(toRow);
+			prev.setCol(toCol);
+			pieces[toRow][toCol]=(ChessPiece)prev.clone();
+			pieces[Row][Col]=null;
+		}
+		//形成吃子的情况
+		else {
+			if(pieces[toRow][toCol].getName()=="RKing"||pieces[toRow][toCol].getName()=="BKing")   //主将被吃
+				this.state=false;
+			pieces[toRow][toCol]=null;
+			prev.setRow(toRow);
+			prev.setCol(toCol);
+			pieces[toRow][toCol]=(ChessPiece)prev.clone();
+			pieces[Row][Col]=null;
+		}
+		return true;
+	}
+	
 	/**
-	 * 生成步并更新棋盘
-	 * @param toRow
-	 * @param toCol
+	 * 检查棋局状态 若为false则棋局结束
+	 * @return
 	 */
-	public void generateMove(int toRow,int toCol) {
-		
+	public boolean getState() {
+		return state;
+	}
+	
+	
+	public Object clone() {
+		Board obj=null;
+		try {
+			obj=(Board)super.clone();
+		}catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
 }
 

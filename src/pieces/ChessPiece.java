@@ -6,7 +6,7 @@ package pieces;
  * @version 1.0
  * @author ypq
  */
-public abstract class ChessPiece {
+public abstract class ChessPiece implements Cloneable{
 	// 棋子颜色 红色为真
 	protected boolean isRed = true;
 	// 当前所处行数
@@ -62,4 +62,14 @@ public abstract class ChessPiece {
  * @return
  */
 	abstract public boolean isLegalMove(int toRow, int toCol);
+	
+	public Object clone() {
+		ChessPiece obj=null;
+		try {
+			obj=(ChessPiece)super.clone();
+		}catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
 }
