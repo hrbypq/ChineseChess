@@ -1,7 +1,9 @@
 package board;
 
+import java.util.*;
+
 /**
- * 控制类
+ * 控制类  不造有没有用
  * @author ypq
  *@version 1.0
  */
@@ -14,7 +16,6 @@ public class Controller {
 		board=new Board();
 	}
 	
-	
 	private Board board;
 	
 	/**
@@ -23,9 +24,11 @@ public class Controller {
 	 * @param Col
 	 * @param toRow
 	 * @param toCol
+	 * @param color
 	 * @return  是否移动成功
 	 */
-	public boolean movePiece(int Row,int Col,int toRow,int toCol) {
+	public boolean movePiece(int Row,int Col,int toRow,int toCol,boolean color) {
+		if()
 		boolean state=board.generateMove(Row, Col, toRow, toCol);
 		if(!state)
 			return false;
@@ -41,11 +44,13 @@ public class Controller {
 		return obj;
 	}
 	
-	
-	public void playPVP() {
-		
+	/**
+	 * 判断棋局是否结束
+	 * @return
+	 */
+	public boolean hasWin() {
+		return board.getState();
 	}
-
 }
 
 
