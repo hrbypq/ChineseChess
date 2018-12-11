@@ -23,33 +23,33 @@ public class Board implements Cloneable{
 	 */
 	public void initBoard() {
 		pieces = new ChessPiece[MAX_ROW][MAX_COL];
-		pieces[0][0]=new Rook(0,0,false,"Rook");
-		pieces[0][8]=new Rook(0,8,false,"Rook");
-		pieces[0][1]=new Knight(0,1,false,"Knight");
-		pieces[0][7]=new Knight(0,7,false,"Knight");
-		pieces[0][2]=new Bishop(0,2,false,"Bishop");
-		pieces[0][6]=new Bishop(0,6,false,"Bishop");
-		pieces[0][3]=new Advisor(0,3,false,"Advisor");
-		pieces[0][5]=new Advisor(0,5,false,"Advisor");
-		pieces[0][4]=new King(0,4,false,"King");
-		pieces[2][1]=new Cannon(2,1,false,"Cannon");
-		pieces[2][7]=new Cannon(2,7,false,"Cannon");
+		pieces[0][0]=new Rook(0,0,false,"BRook");
+		pieces[0][8]=new Rook(0,8,false,"BRook");
+		pieces[0][1]=new Knight(0,1,false,"BKnight");
+		pieces[0][7]=new Knight(0,7,false,"BKnight");
+		pieces[0][2]=new Bishop(0,2,false,"BBishop");
+		pieces[0][6]=new Bishop(0,6,false,"BBishop");
+		pieces[0][3]=new Advisor(0,3,false,"BAdvisor");
+		pieces[0][5]=new Advisor(0,5,false,"BAdvisor");
+		pieces[0][4]=new King(0,4,false,"BKing");
+		pieces[2][1]=new Cannon(2,1,false,"BCannon");
+		pieces[2][7]=new Cannon(2,7,false,"BCannon");
 		
-		pieces[9][0]=new Rook(9,0,true,"Rook");
-		pieces[9][8]=new Rook(9,8,true,"Rook");
-		pieces[9][1]=new Knight(9,1,true,"Knight");
-		pieces[9][7]=new Knight(9,7,true,"Knight");
-		pieces[9][2]=new Bishop(9,2,true,"Bishop");
-		pieces[9][6]=new Bishop(9,6,true,"Bishop");
-		pieces[9][3]=new Advisor(9,3,true,"Advisor");
-		pieces[9][5]=new Advisor(9,5,true,"Advisor");
-		pieces[9][4]=new King(9,4,true,"King");
-		pieces[7][1]=new Cannon(7,1,true,"Cannon");
-		pieces[7][7]=new Cannon(7,7,true,"Cannon");
+		pieces[9][0]=new Rook(9,0,true,"RRook");
+		pieces[9][8]=new Rook(9,8,true,"RRook");
+		pieces[9][1]=new Knight(9,1,true,"RKnight");
+		pieces[9][7]=new Knight(9,7,true,"RKnight");
+		pieces[9][2]=new Bishop(9,2,true,"RBishop");
+		pieces[9][6]=new Bishop(9,6,true,"RBishop");
+		pieces[9][3]=new Advisor(9,3,true,"RAdvisor");
+		pieces[9][5]=new Advisor(9,5,true,"RAdvisor");
+		pieces[9][4]=new King(9,4,true,"RKing");
+		pieces[7][1]=new Cannon(7,1,true,"RCannon");
+		pieces[7][7]=new Cannon(7,7,true,"RCannon");
 		
 		for(int i=0;i<=8;i+=2) {
-			pieces[3][i]=new Pawn(3,i,false,"Pawn");
-			pieces[6][i]=new Pawn(6,i,true,"Pawn");
+			pieces[3][i]=new Pawn(3,i,false,"BPawn");
+			pieces[6][i]=new Pawn(6,i,true,"RPawn");
 		}
 	}
 	
@@ -77,12 +77,14 @@ public class Board implements Cloneable{
 		switch(piece.getName()) {
 		
 		//兵
-		case "Pawn":{
+		case "RPawn":
+		case "BPawn":{
 			break;
 		}
 		
 		//车
-		case "Rook":{
+		case "RRook":
+		case "BRook":{
 			//横向行走情形  不能越过棋子
 			if(toRow==piece.getRow()) {
 				if(toCol>piece.getCol()) {
@@ -116,7 +118,8 @@ public class Board implements Cloneable{
 		}
 		
 		//马
-		case "Knight":{
+		case "RKnight":
+		case "BKnight":{
 			//不能蹩马腿
 			if(toCol==piece.getCol()-2) {
 				if(pieces[piece.getRow()][piece.getCol()-1]!=null) 
@@ -137,7 +140,8 @@ public class Board implements Cloneable{
 		}
 		
 		//炮
-		case "Cannon":{
+		case "RCannon":
+		case "BCannon":{
 			//只有吃子时能越过棋子
 			//横向移动情形
 			if(toRow==piece.getRow()) {
@@ -172,7 +176,8 @@ public class Board implements Cloneable{
 		}
 		
 		//象
-		case "Bishop":{
+		case "RBishop":
+		case "BBishop":{
 			//象眼位不能有棋子
 			if(toRow==piece.getRow()-2&&toCol==piece.getCol()-2) {
 				if(pieces[toRow+1][toCol+1]!=null)
@@ -193,12 +198,14 @@ public class Board implements Cloneable{
 		}
 		
 		//仕
-		case "Advisor":{
+		case "RAdvisor":
+		case "BAdvisor":{
 			break;
 		}
 		
 		//将
-		case "King":{
+		case "RKing":
+		case "BKing":{
 			break;
 		}
 		
@@ -251,6 +258,15 @@ public class Board implements Cloneable{
 	 */
 	public boolean getState() {
 		return state;
+	}
+	
+	
+	/**
+	 * 获得棋盘
+	 * @return
+	 */
+	public ChessPiece[][] getPieces(){
+		return pieces;
 	}
 	
 	

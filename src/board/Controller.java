@@ -1,9 +1,8 @@
 package board;
 
-import java.util.*;
 
 /**
- * 控制类  不造有没有用
+ * 控制类
  * @author ypq
  *@version 1.0
  */
@@ -28,7 +27,6 @@ public class Controller {
 	 * @return  是否移动成功
 	 */
 	public boolean movePiece(int Row,int Col,int toRow,int toCol,boolean color) {
-		if()
 		boolean state=board.generateMove(Row, Col, toRow, toCol);
 		if(!state)
 			return false;
