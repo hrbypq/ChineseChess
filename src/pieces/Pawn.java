@@ -14,7 +14,7 @@ public class Pawn extends ChessPiece{
 	public boolean isLegalMove(int toRow, int toCol){
 		 //红棋情形
 		if(this.isRed){
-			if(toRow-this.row<0||toRow-this.row<-1)
+			if(toRow-this.row>0||toRow-this.row<-1)
 				return false;
 			//红兵 未过河
 			if(this.row>=5){

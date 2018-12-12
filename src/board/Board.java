@@ -65,7 +65,7 @@ public class Board implements Cloneable{
 		if(toRow==piece.getRow()&&toCol==piece.getCol())     
 			return false;
 		//不能超出棋盘
-		if(toRow<0||toCol<0||toRow>MAX_ROW||toCol>MAX_COL)
+		if(toRow<0||toCol<0||toRow>MAX_ROW-1||toCol>MAX_COL-1)
 			return false;
 		//针对棋子本身判断此步是否合法
 		if(!piece.isLegalMove(toRow, toCol))
@@ -88,13 +88,13 @@ public class Board implements Cloneable{
 			//横向行走情形  不能越过棋子
 			if(toRow==piece.getRow()) {
 				if(toCol>piece.getCol()) {
-					for(int i=piece.getCol();i<toCol;i++) {
+					for(int i=piece.getCol()+1;i<toCol;i++) {
 						if(pieces[toRow][i]!=null) 
 							return false;
 					}
 				}
 				else {
-					for(int i=toCol;i<piece.getCol();i++) {
+					for(int i=toCol+1;i<piece.getCol();i++) {
 						if(pieces[toRow][i]!=null) 
 							return false;
 					}
@@ -103,13 +103,13 @@ public class Board implements Cloneable{
 			//纵向行走情形   不能越过棋子
 			if(toCol==piece.getCol()) {
 				if(toRow>piece.getRow()) {
-					for(int i=piece.getRow();i<toRow;i++) {
+					for(int i=piece.getRow()+1;i<toRow;i++) {
 						if(pieces[i][toCol]!=null)
 							return false;
 					}
 				}
 				else {
-					for(int i=toRow;i<piece.getRow();i++) {
+					for(int i=toRow+1;i<piece.getRow();i++) {
 						if(pieces[i][toCol]!=null)
 							return false;
 					}
@@ -146,14 +146,18 @@ public class Board implements Cloneable{
 			//横向移动情形
 			if(toRow==piece.getRow()) {
 				if(toCol>piece.getCol()) {
-					for(int i=piece.getCol();i<toCol;i++) {
-						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+					for(int i=piece.getCol()+1;i<toCol;i++) {
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol]==null)
+							return false;
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()==piece.getColor())
 							return false;
 					}
 				}
 				if(toCol<piece.getCol()) {
-					for(int i=toCol;i<piece.getCol();i++) {
-						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+					for(int i=toCol+1;i<piece.getCol();i++) {
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol]==null)
+							return false;
+						if(pieces[toRow][i]!=null&&pieces[toRow][toCol].getColor()==piece.getColor())
 							return false;
 					}
 				}
@@ -161,14 +165,18 @@ public class Board implements Cloneable{
 			//纵向移动情形
 			if(toCol==piece.getCol()) {
 				if(toRow>piece.getRow()) {
-					for(int i=piece.getRow();i<toRow;i++) {
-						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+					for(int i=piece.getRow()+1;i<toRow;i++) {
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol]==null)
+							return false;
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()==piece.getColor())
 							return false;
 					}
 				}
 				if(toRow<piece.getRow()) {
-					for(int i=toRow;i<piece.getRow();i++) {
-						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()!=piece.getColor())
+					for(int i=toRow+1;i<piece.getRow();i++) {
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol]==null)
+							return false;
+						if(pieces[i][toCol]!=null&&pieces[toRow][toCol].getColor()==piece.getColor())
 							return false;
 					}
 				}
@@ -223,7 +231,7 @@ public class Board implements Cloneable{
  * @return 是否移动成功
  */
 	public boolean generateMove(int Row,int Col,int toRow,int toCol) {
-		if(toRow>MAX_ROW||toRow<0||toCol>MAX_COL||toCol<0)   //检查位置是否非法
+		if(toRow>MAX_ROW-1||toRow<0||toCol>MAX_COL-1||toCol<0)   //检查位置是否非法
 			return false;
 		ChessPiece prev=pieces[Row][Col];    //将要移动的棋子
 		if(prev==null)

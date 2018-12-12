@@ -27,6 +27,10 @@ public class Controller {
 	 * @return  是否移动成功
 	 */
 	public boolean movePiece(int Row,int Col,int toRow,int toCol,boolean color) {
+		if(board.getPieces()[Row][Col]==null)
+			return false;
+		if(board.getPieces()[Row][Col].getColor()!=color)
+			return false;
 		boolean state=board.generateMove(Row, Col, toRow, toCol);
 		if(!state)
 			return false;
@@ -47,7 +51,7 @@ public class Controller {
 	 * @return
 	 */
 	public boolean hasWin() {
-		return board.getState();
+		return !board.getState();
 	}
 }
 
